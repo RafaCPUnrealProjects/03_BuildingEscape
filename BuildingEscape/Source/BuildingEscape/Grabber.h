@@ -51,4 +51,9 @@ private:
 
 	//Called when grab is released
 	void Release();
+
+	//Returns current end of reach line
+	FVector GetReachLineEnd() const;
+
+	FVector GetReachLineStart() const;
 };
