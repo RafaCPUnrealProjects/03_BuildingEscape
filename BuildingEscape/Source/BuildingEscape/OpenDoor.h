@@ -7,8 +7,10 @@
 #include "Gameframework/Actor.h"
 #include "Engine/TriggerVolume.h"
 #include "Engine/World.h"
+#include "Components/PrimitiveComponent.h"
 #include "OpenDoor.generated.h"
 
+#define OUT
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
@@ -31,19 +33,22 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	float GetTotalMassOfActorsOnPlate();
+
 
 private:
 	UPROPERTY(EditAnywhere)
-		float OpenAngle = 90.f;
+		float OpenAngle = -90.f;
 
 	UPROPERTY(EditAnywhere)
 		ATriggerVolume* PressurePlate;
 
 	UPROPERTY(EditAnywhere)
-		float DoorCLoseDelay = 1.f;
-
-	AActor* ActorThatOpens;
-
+		float DoorCloseDelay = 1.f;
+	
+	UPROPERTY(EditAnywhere)
+		float HeightThreshold = 30.f;
+	
 	float LastDoorOpenTime;
 
 	AActor* Owner;
