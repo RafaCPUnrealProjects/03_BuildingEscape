@@ -9,6 +9,7 @@
 #include "Public/DrawDebugHelpers.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "Grabber.generated.h"
 
 
@@ -25,12 +26,16 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	void SetupInputComponent();
+
+	void FindPhysicsHandleComponent();
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	//how long is the debug line
+	//How far ahead of the player can we reach in cm
 	UPROPERTY(EditAnywhere)
 		float Reach = 100.f;
 	
@@ -38,6 +43,12 @@ private:
 
 	UInputComponent* InputComponent = nullptr;
 	
+	//Ray-cast and grab what's in reach
 	void Grab();
+
+	//Returns the Hit result of a raycast
+	FHitResult GetFirstPhysicsBodyInReach() const;
+
+	//Called when grab is released
 	void Release();
 };
