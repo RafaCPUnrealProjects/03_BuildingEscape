@@ -59,6 +59,7 @@ void UGrabber::Grab()
 	///If we hit something the attack a physics handle
 	if (ActorHit)
 	{
+		if (!PhysicsHandle) return; //pointer protection
 		PhysicsHandle->GrabComponentAtLocation(
 			ComponentToGrab, 
 			NAME_None, //no bones needed
@@ -84,6 +85,7 @@ FHitResult UGrabber::GetFirstPhysicsBodyInReach() const
 
 void UGrabber::Release()
 {
+	if (!PhysicsHandle) return; //pointer protection
 	if (PhysicsHandle->GrabbedComponent)
 	{
 		PhysicsHandle->ReleaseComponent();
@@ -115,6 +117,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (!PhysicsHandle) return; //pointer protection
 	if (PhysicsHandle->GrabbedComponent)
 	{
 		PhysicsHandle->SetTargetLocation(GetReachLineEnd());
